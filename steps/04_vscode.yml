@@ -1,0 +1,39 @@
+- host: localhost
+
+  vars_files:
+    - ../configuration.yml
+
+  tasks:
+    - name: apt key
+      apt_key: 
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+      when: VISUAL_STUDIO_CODE_ENABLED
+
+    - name: apt repo
+      apt_repository:
+        repo: deb [ arch=amd64 ] https://packages.microsoft.com/repos/vscode stable main
+        state: present
+      when: VISUAL_STUDIO_CODE_ENABLED
+
+    - name: install vscode
+      apt:
+        name: code
+        update_cache: true
+      when: VISUAL_STUDIO_CODE_ENABLED
+
+    - name: install vscode pluggins
+      command: "code --install-extension {{item}}"
+      with_items:
+        - golang.go
+        - davidanson.vscode-markdownlint
+        - shd101wyy.markdown-preview-enhanced
+        - ms-python.python
+        - eriklynd.json-tools
+        - zbr.vscode-ansible
+        - equinusocio.vsc-community-material-theme
+        - ms-azuretools.vscode-docker
+        - eamodio.gitlens
+        - pkief.material-icon-theme
+        - redhat.vscode-yaml
+      when: VISUAL_STUDIO_CODE_ENABLED

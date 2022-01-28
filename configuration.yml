@@ -1,0 +1,20 @@
+# This file contains the steps flags to determine which steps yo want to
+# excecute with the comand make configure-linux, feel free to change this
+# variable values according to your needs
+# 
+# Posible values por each variable: 
+# - 0: False
+# - 1: True
+
+PYTHON_ENABLED: 0
+
+AWS_CLI_ENABLED: 0
+
+LINUX_UTILITIES_ENABLED: 0
+
+VISUAL_STUDIO_CODE_ENABLED: 0
+
+GOLANG_ENABLED: 0
+
+
+

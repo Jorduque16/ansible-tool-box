@@ -1,0 +1,75 @@
+- hosts: localhost
+  
+  vars_files:
+    - ../configuration.yml
+
+  vars:
+    GO_VERSION: "1.17.6"
+    FILE: "{{CACHE_DIR}}/go/go{{GO_VERSION}}.linux-amd64.tar.gz"
+    SRC:  "{{CACHE_DIR}}/go/go{{GO_VERSION}}"
+    DESTINATION_FOLDER: "/usr/local/golang/{{GO_VERSION}}"
+
+  tasks:
+
+  - name: create folder
+    file: 
+      path:  "{{item}}"
+      state: directory
+      mode: 0777
+    with_items:
+      - "{{SRC}}"
+      - "{{DESTINATION_FOLDER}}"
+
+  - name: download go
+    get_url:
+      url:  "https://storage.googleapis.com/golang/{{FILE | basename}}"
+      dest: "{{FILE}}"
+
+  - name: unarchive golang
+    unarchive:
+      src:  "{{FILE}}"
+      dest: "{{SRC}}"
+      remote_src: yes
+    connection: local
+
+  - name: copy
+    command: "cp -r {{SRC}}/go {{DESTINATION_FOLDER}}"
+    args:
+      creates: "{{DESTINATION_FOLDER}}/go"
+
+  - name: list bin
+    command: "ls {{DESTINATION_FOLDER}}/go/bin"
+    changed_when: false
+    register: list_bin
+
+  - name: create links
+    file:
+      state: link
+      src: "{{DESTINATION_FOLDER}}/go/bin/{{item}}"
+      dest: "/usr/local/bin/{{item}}"
+    with_items: "{{list_bin.stdout_lines}}"
+
+  - name: create goroot link
+    file:
+      state: link
+      src: "{{DESTINATION_FOLDER}}/go"
+      dest: "/usr/local/go"
+
+  - name: install packages
+    command: "go get -u {{item}}"
+    environment:
+      GOPATH: ""
+      GO111MODULE: "auto"
+    with_items:
+      - honnef.co/go/tools/cmd/staticcheck
+      - github.com/jstemmer/go-junit-report
+      - github.com/google/wire/cmd/wire
+    connection: local
+
+  - lineinfile:
+      path: "{{item}}"
+      line: "export PATH=~/go/bin:$PATH"
+    with_items:
+      - ~/.bashrc
+      - ~/.zshrc
+    connection: local

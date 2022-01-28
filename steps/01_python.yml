@@ -1,0 +1,16 @@
+- host: localhost
+
+  vars_files:
+    - ../configuration.yml
+
+  vars: 
+    LIBRARY_NAME:
+      - boto3==1.16.25
+      - boto==2.49.0
+      - requests==2.25.0
+    
+  task:
+    - name: install python3 libs
+      pip:
+        name: "{{LIBRARY_NAME}}"
+      when: PYTHON_ENABLED
