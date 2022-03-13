@@ -1,35 +1,31 @@
-- host: localhost
+- hosts: localhost
 
   vars_files:
     - ../configuration.yml
 
   vars:
-    AWS_CLI_VERSION: 2.2.34
+    AWS_VERSION: 2.2.34
     CACHE_DIR: /tmp/.ansible-tool-box
   
-  task:
+  tasks:
   - name: create cache dir
     file: 
       path: "{{CACHE_DIR}}"
       state: directory
-    when: AWS_CLI_ENABLED
 
   - name: download aws_cli_v2
     get_url:
       url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{AWS_VERSION}}.zip
       dest: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}.zip"
-    when: AWS_CLI_ENABLED
 
   - file:
       path: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}"
       state: directory
-    when: AWS_CLI_ENABLED
 
   - name: decompress aws_cli_v2
     unarchive:
       src: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}.zip"
       dest: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}"
-    when: AWS_CLI_ENABLED
 
   - name: remove aws_cli_v2
     file:
@@ -39,10 +35,9 @@
       - /usr/local/bin/aws
       - /usr/local/bin/aws_completer
       - /usr/local/aws-cli
-    when: AWS_CLI_ENABLED
 
   - name: install aws_cli_v2
-    command: ./install
-    args:
-      chdir: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}/aws"
-    when: AWS_CLI_ENABLED
+    become: yes
+    become_user: root
+    become_method: sudo
+    shell: cd {{CACHE_DIR}}/awscli-{{AWS_VERSION}}/aws && ./install

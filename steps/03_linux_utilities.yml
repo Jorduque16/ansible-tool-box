@@ -6,6 +6,8 @@
   tasks:
   - name: installing packages
     become: yes
+    become_user: root
+    become_method: sudo
     apt:
       pkg:
         - vim
@@ -17,3 +19,27 @@
         - tree
       state: latest
       update_cache: true
+
+  - name: create .vim folder structure
+    file:
+      path: "{{ item }}"
+      state: directory
+    loop:
+      - ~/.vim
+      - ~/.vim/autoload
+      - ~/.vim/backup
+      - ~/.vim/colors
+      - ~/.vim/plugged
+
+  - name: install vim pluggin manager
+    get_url:
+      url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      dest: ~/.vim/autoload/plug.vim
+
+  - name: download color scheme molokai
+    get_url:
+      url: https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+      dest: ~/.vim/colors/molokai.vim
+
+  - name: configure vimrc
+    shell: cp templates/vimrc_template.txt ~/.vimrc
