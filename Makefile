@@ -13,7 +13,7 @@ ansible-dependencies:
 
 install-ansible:
 	##* Install ansible
-	pip3 install ansible==2.9.6
+	sudo apt install ansible
 
 configure-linux: ansible-dependencies install-ansible	
 	ansible-playbook all.yml
