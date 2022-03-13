@@ -12,6 +12,7 @@
         - xclip
         - git
         - netstat
+        - tree
 
   - name: sysctl
     sysctl:
