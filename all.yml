@@ -2,18 +2,12 @@
 
 - import_playbook: steps/02_aws_cli.yml
 
-- import_playbook: steps/03_linux_utilities.yml
-
-- import_playbook: steps/04_vscode.yml
-
-- import_playbook: steps/05_golang.yml
-
 	## TODO: PHP y PHP-fpm
 	## TODO: Configure visual studio code theme
-	## TODO: COnfigure Vim as code editor
 	## TODO: Mysqlserver
 	## TODO: NGinx
 	## TODO: Google Chrome
+	## TODO: Brave Browser
 	## TODO: Spotify
 	## TODO: Mysql Workbench
 	## TODO: DbBeaver

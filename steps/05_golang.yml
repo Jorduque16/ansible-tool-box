@@ -4,6 +4,7 @@
     - ../configuration.yml
 
   vars:
+    CACHE_DIR: /tmp/.ansible-tool-box
     GO_VERSION: "1.17.6"
     FILE: "{{CACHE_DIR}}/go/go{{GO_VERSION}}.linux-amd64.tar.gz"
     SRC:  "{{CACHE_DIR}}/go/go{{GO_VERSION}}"
@@ -12,6 +13,7 @@
   tasks:
 
   - name: create folder
+    become: yes
     file: 
       path:  "{{item}}"
       state: directory
@@ -43,6 +45,7 @@
     register: list_bin
 
   - name: create links
+    become: yes
     file:
       state: link
       src: "{{DESTINATION_FOLDER}}/go/bin/{{item}}"
@@ -50,6 +53,7 @@
     with_items: "{{list_bin.stdout_lines}}"
 
   - name: create goroot link
+    become: yes
     file:
       state: link
       src: "{{DESTINATION_FOLDER}}/go"

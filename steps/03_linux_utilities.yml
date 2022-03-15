@@ -17,13 +17,14 @@
         - git
         - net-tools
         - tree
+        - zsh
       state: latest
       update_cache: true
 
   - name: create .vim folder structure
     file:
-      path: "{{ item }}"
-      state: directory
+        path: "{{ item }}"
+        state: directory
     loop:
       - ~/.vim
       - ~/.vim/autoload
@@ -33,13 +34,70 @@
 
   - name: install vim pluggin manager
     get_url:
-      url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      dest: ~/.vim/autoload/plug.vim
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: ~/.vim/autoload/plug.vim
 
   - name: download color scheme molokai
     get_url:
-      url: https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
-      dest: ~/.vim/colors/molokai.vim
+        url: https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+        dest: ~/.vim/colors/molokai.vim
 
   - name: configure vimrc
     shell: cp templates/vimrc_template.txt ~/.vimrc
+
+  - name: create fonts folder
+    file:
+        path: ~/.local/share/fonts
+        state: directory
+
+  - name: install fonts
+    get_url:
+        url: "{{ item }}"
+        dest: ~/.local/share/fonts 
+    loop:
+        - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+        - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+        - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+        - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+
+  - name: reload fonts
+    shell: fc-cache -f -v
+
+  - name: remove prevous configuration file
+    file:
+        path: ~/.oh-my-zsh
+        state: absent
+
+  - name: install Oh my zsh
+    shell: sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"  
+
+  - name: clone power10k repository
+    git:
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: ~/powerlevel10k
+  
+  - name: append source in zshrc
+    lineinfile:
+        insertbefore: BOF
+        path: ~/.zshrc
+        line: source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+  - name: set p10k configurations
+    shell: cp templates/p10k_configuration.txt ~/.p10k.zsh
+
+  - name: disable p10k wizzard
+    lineinfile:
+        insertbefore: BOF
+        path: ~/.zshrc 
+        line: POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+  - name: load p10k configurations
+    lineinfile:
+        insertbefore: BOF
+        path: ~/.zshrc 
+        line: source ~/.p10k.zsh
+
+  - name: set zsh as a default shell
+    lineinfile:
+        path: ~/.bashrc 
+        line: /bin/zsh
