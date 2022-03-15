@@ -1,0 +1,11 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "git.autofetch": true,
+    "files.autoSave": "afterDelay",
+    "workbench.colorTheme": "Community Material Theme Ocean",
+    "gitlens.hovers.currentLine.over": "line",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "redhat.telemetry.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "go.toolsManagement.autoUpdate": true
+}
