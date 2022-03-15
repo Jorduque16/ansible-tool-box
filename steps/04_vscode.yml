@@ -33,3 +33,23 @@
       apt:
           name: code
           state: present
+
+    - name: install vscode extensions
+      command: "code --install-extension {{ item }} --force"
+      with_items:
+        - golang.go
+        - davidanson.vscode-markdownlint
+        - shd101wyy.markdown-preview-enhanced
+        - ms-python.python
+        - eriklynd.json-tools
+        - equinusocio.vsc-community-material-theme
+        - ms-azuretools.vscode-docker
+        - eamodio.gitlens
+        - pkief.material-icon-theme
+        - redhat.vscode-yaml
+        - redhat.ansible
+        - aaron-bond.better-comments
+        - wayou.vscode-todo-highlight
+    
+    - name: set vscode settings
+      shell: cat templates/vscode_settings.txt > ~/.config/Code/User/settings.json

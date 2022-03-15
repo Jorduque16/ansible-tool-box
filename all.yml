@@ -3,10 +3,8 @@
 - import_playbook: steps/02_aws_cli.yml
 
 	## TODO: PHP y PHP-fpm
-	## TODO: Configure visual studio code theme
 	## TODO: Mysqlserver
 	## TODO: NGinx
-	## TODO: Google Chrome
 	## TODO: Brave Browser
 	## TODO: Spotify
 	## TODO: Mysql Workbench
