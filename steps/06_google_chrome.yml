@@ -4,7 +4,7 @@
     - ../configuration.yml
 
   tasks:
-    - name: install google chrome
+    - name: Install google chrome
       become: yes
       apt:
         deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

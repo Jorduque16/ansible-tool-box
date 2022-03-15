@@ -1,0 +1,12 @@
+- hosts: localhost
+
+  vars_files:
+    - ../configuration.yml
+
+  tasks:
+    - name: Install "slack
+      become: yes
+      snap:
+        name: slack
+        classic: yes
+        channel: stable

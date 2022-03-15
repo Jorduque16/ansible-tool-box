@@ -4,7 +4,7 @@
     - ../configuration.yml
 
   tasks:
-    - name: update package index
+    - name: Update package index
       become: yes
       become_user: root
       become_method: sudo
@@ -15,10 +15,10 @@
           - wget
         update_cache: true
 
-    - name: import Microsoft GPG key
+    - name: Import Microsoft GPG key
       shell: wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
 
-    - name: add vscode repository
+    - name: Add vscode repository
       become: yes
       become_user: root
       become_method: sudo
@@ -26,7 +26,7 @@
           repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
           state: present
 
-    - name: install vscode
+    - name: Install vscode
       become: yes
       become_user: root
       become_method: sudo
@@ -34,7 +34,7 @@
           name: code
           state: present
 
-    - name: install vscode extensions
+    - name: Install vscode extensions
       command: "code --install-extension {{ item }} --force"
       with_items:
         - golang.go
@@ -51,5 +51,5 @@
         - aaron-bond.better-comments
         - wayou.vscode-todo-highlight
     
-    - name: set vscode settings
+    - name: Set vscode settings
       shell: cat templates/vscode_settings.txt > ~/.config/Code/User/settings.json

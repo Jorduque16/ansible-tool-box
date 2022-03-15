@@ -8,26 +8,27 @@
     CACHE_DIR: /tmp/.ansible-tool-box
   
   tasks:
-  - name: create cache dir
+  - name: Create cache dir
     file: 
       path: "{{CACHE_DIR}}"
       state: directory
 
-  - name: download aws_cli_v2
+  - name: Download aws_cli_v2
     get_url:
       url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{AWS_VERSION}}.zip
       dest: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}.zip"
 
-  - file:
+  - name: Create aws-cli folder
+    file:
       path: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}"
       state: directory
 
-  - name: decompress aws_cli_v2
+  - name: Decompress aws_cli_v2
     unarchive:
       src: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}.zip"
       dest: "{{CACHE_DIR}}/awscli-{{AWS_VERSION}}"
 
-  - name: remove aws_cli_v2
+  - name: Remove aws_cli_v2
     file:
       state: absent
       path: "{{item}}"
@@ -36,7 +37,7 @@
       - /usr/local/bin/aws_completer
       - /usr/local/aws-cli
 
-  - name: install aws_cli_v2
+  - name: Install aws_cli_v2
     become: yes
     become_user: root
     become_method: sudo

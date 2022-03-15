@@ -1,0 +1,10 @@
+- hosts: localhost
+
+  vars_files:
+    - ../configuration.yml
+
+  tasks:
+    - name: Install DbBeaver
+      become: yes
+      apt:
+        deb: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb

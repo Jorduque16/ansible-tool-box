@@ -12,7 +12,7 @@
 
   tasks:
 
-  - name: create folder
+  - name: Create folder
     become: yes
     file: 
       path:  "{{item}}"
@@ -22,29 +22,29 @@
       - "{{SRC}}"
       - "{{DESTINATION_FOLDER}}"
 
-  - name: download go
+  - name: Download go binary
     get_url:
       url:  "https://storage.googleapis.com/golang/{{FILE | basename}}"
       dest: "{{FILE}}"
 
-  - name: unarchive golang
+  - name: Unarchive golang
     unarchive:
       src:  "{{FILE}}"
       dest: "{{SRC}}"
       remote_src: yes
     connection: local
 
-  - name: copy
+  - name: Copy golang binary
     command: "cp -r {{SRC}}/go {{DESTINATION_FOLDER}}"
     args:
       creates: "{{DESTINATION_FOLDER}}/go"
 
-  - name: list bin
+  - name: List bin
     command: "ls {{DESTINATION_FOLDER}}/go/bin"
     changed_when: false
     register: list_bin
 
-  - name: create links
+  - name: Create links
     become: yes
     file:
       state: link
@@ -52,14 +52,14 @@
       dest: "/usr/local/bin/{{item}}"
     with_items: "{{list_bin.stdout_lines}}"
 
-  - name: create goroot link
+  - name: Create goroot link
     become: yes
     file:
       state: link
       src: "{{DESTINATION_FOLDER}}/go"
       dest: "/usr/local/go"
 
-  - name: install packages
+  - name: Install packages
     command: "go get -u {{item}}"
     environment:
       GOPATH: ""
@@ -70,7 +70,8 @@
       - github.com/google/wire/cmd/wire
     connection: local
 
-  - lineinfile:
+  - name: Export go binary to profiles
+    lineinfile:
       path: "{{item}}"
       line: "export PATH=~/go/bin:$PATH"
     with_items:
