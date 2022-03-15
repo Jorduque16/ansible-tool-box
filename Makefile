@@ -17,3 +17,6 @@ install-ansible:
 
 configure-linux: ansible-dependencies install-ansible	
 	ansible-playbook all.yml
+	ansible-playbook steps/03_linux_utilities.yml --ask-become-pass
+	ansible-playbook steps/04_vscode.yml --ask-become-pass
+	ansible-playbook steps/05_golang.yml --ask-become-pass
