@@ -31,5 +31,4 @@ configure-linux: ansible-dependencies install-ansible
 	ansible-playbook steps/13_mysql.yml --ask-become-pass
 	ansible-playbook steps/14_discord.yml --ask-become-pass
 	ansible-playbook steps/15_anydesk.yml --ask-become-pass
-
-	## TODO: Nodejs
+	ansible-playbook steps/16_nodejs.yml --ask-become-pass
