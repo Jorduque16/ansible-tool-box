@@ -13,17 +13,20 @@
         when: not PHP_ENABLED
 
       - name: Add php apt key 
+        become: yes
         apt_key:
             url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x4F4EA0AAE5267A6C
             state: present
         
       - name: Add repository
+        become: yes
         apt_repository:             
           repo: "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main"
           state: present
           update_cache: yes
 
       - name: Install PHP
+        become: yes
         apt:
           name: "{{packages}}"
           update_cache: yes
@@ -47,11 +50,13 @@
             - "php{{ PHP_VERSION }}-xdebug"
       
       - name: Enable cli opcache
+        become: yes
         lineinfile:
           path: "/etc/php/{{ PHP_VERSION }}/cli/conf.d/10-opcache.ini"
           line: opcache.enable_cli = 1
       
       - name: Install composer
+        become: yes
         get_url:
           url: https://getcomposer.org/download/1.10.22/composer.phar
           dest: /usr/sbin/composer

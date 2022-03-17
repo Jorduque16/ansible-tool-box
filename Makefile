@@ -3,7 +3,6 @@
 SHELL = /usr/bin/env bash
 
 ansible-dependencies:
-	##* Install ansible dependencies
 	sudo add-apt-repository main
 	sudo apt update
 	sudo apt upgrade -y
@@ -12,7 +11,6 @@ ansible-dependencies:
 	pip3 install wheel
 
 install-ansible:
-	##* Install ansible
 	sudo apt install ansible -y
 
 configure-linux: ansible-dependencies install-ansible	
