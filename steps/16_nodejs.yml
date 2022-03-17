@@ -36,6 +36,7 @@
           state: absent
 
       - name: Create dir (/usr/local/nvm, /usr/local/nvm/alias, /opt/nvm)
+        become: yes
         file:
           path: "{{item}}"
           state: directory
@@ -70,6 +71,7 @@
           - ~/.zshrc
 
       - name: Profile global (/etc/profile, /etc/skel/.bashrc)
+        become: yes
         blockinfile:        
           block: |          
             export NVM_DIR="/usr/local/nvm"
@@ -110,6 +112,7 @@
           - /opt/nvm
 
       - name: Create a symbolic link /usr/local/bin/node
+        become: yes
         shell: export LASTEST=$(ls -ldr /usr/local/nvm/versions/node/v{{NODE_14}}* | head -1 | awk '{print $9}') && ln -sf $LASTEST/bin/node /usr/local/bin/node
         args:
           executable: /bin/bash       
