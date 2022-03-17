@@ -26,10 +26,10 @@ configure-linux: ansible-dependencies install-ansible
 	ansible-playbook steps/08_spotify.yml --ask-become-pass
 	ansible-playbook steps/09_dbBeaver.yml --ask-become-pass
 	ansible-playbook steps/10_slack.yml --ask-become-pass
+	ansible-playbook steps/11_php.yml --ask-become-pass
+	ansible-playbook steps/12_nginx.yml --ask-become-pass
+	ansible-playbook steps/13_mysql.yml --ask-become-pass
+	ansible-playbook steps/14_discord.yml --ask-become-pass
 
-	## TODO: PHP y PHP-fpm
-	## TODO: Mysqlserver
-	## TODO: NGinx
 	## TODO: Nodejs
-	## TODO: Discord
 	## TODO: Anydesk

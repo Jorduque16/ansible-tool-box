@@ -2,7 +2,7 @@
   connection: local
 
   vars_files:
-    - ../configuration.yml
+      - ../configuration.yml
 
   vars: 
     LIBRARY_NAME:
@@ -11,6 +11,10 @@
       - requests==2.25.0
     
   tasks:
-    - name: Install python3 libs
-      pip:
-        name: "{{LIBRARY_NAME}}"
+      - name: Check configuration file
+        meta: end_play
+        when: not PYTHON_ENABLED
+
+      - name: Install python3 libs
+        pip:
+          name: "{{LIBRARY_NAME}}"

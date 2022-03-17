@@ -7,11 +7,11 @@
   tasks:
       - name: Check configuration file
         meta: end_play
-        when: not SLACK_ENABLED
+        when: not DISCORD_ENABLED
 
-      - name: Install slack
+      - name: Install discord
         become: yes
         snap:
-          name: slack
+          name: discord
           classic: yes
           channel: stable

@@ -2,10 +2,14 @@
   connection: local
 
   vars_files:
-    - ../configuration.yml
+      - ../configuration.yml
 
   tasks:
-    - name: Install DbBeaver
-      become: yes
-      apt:
-        deb: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+      - name: Check configuration file
+        meta: end_play
+        when: not DB_BEAVER_ENABLED
+
+      - name: Install DbBeaver
+        become: yes
+        apt:
+          deb: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
