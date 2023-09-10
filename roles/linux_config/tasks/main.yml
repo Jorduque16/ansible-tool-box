@@ -1,0 +1,14 @@
+- name: load configuration variables
+  include_vars: ../../../configuration.yml
+
+- include_tasks: 00_aws_cli.yml
+  when: "AWS_CLI_ENABLED == true"
+
+- include_tasks: 01_terminal_customization.yml
+  when: "LINUX_UTILITIES_ENABLED == true"
+
+- include_tasks: 02_power10k.yml
+  when: "ZSH_AND_POWER10K_THEME_ENABLED == true"
+
+- include_tasks: 03_vim_customization.yml
+  when: "VIM_THEME_AND_SETTINGS_ENABLED == true"

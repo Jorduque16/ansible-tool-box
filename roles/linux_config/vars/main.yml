@@ -1,0 +1,15 @@
+AWS_VERSION: 2.2.34
+CACHE_DIR: /tmp/.ansible-tool-box
+
+LINUX_PACKAGES:
+  - vim
+  - zip
+  - htop
+  - xclip
+  - git
+  - net-tools
+  - tree
+  - zsh
+  - snapd
+  - tar
+  - unzip

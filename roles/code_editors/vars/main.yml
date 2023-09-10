@@ -1,0 +1,14 @@
+VISUAL_STUDIO_CODE_EXTENSIONS:
+  - golang.go
+  - davidanson.vscode-markdownlint
+  - shd101wyy.markdown-preview-enhanced
+  - ms-python.python
+  - eriklynd.json-tools
+  - equinusocio.vsc-community-material-theme
+  - ms-azuretools.vscode-docker
+  - eamodio.gitlens
+  - pkief.material-icon-theme
+  - redhat.vscode-yaml
+  - redhat.ansible
+  - aaron-bond.better-comments
+  - wayou.vscode-todo-highlight

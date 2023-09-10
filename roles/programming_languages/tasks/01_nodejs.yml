@@ -1,0 +1,96 @@
+- name: Remove nodejs old in linux
+  package:
+    name:  nodejs
+    state: absent
+
+- name: Apt remove repo in linux
+  apt_repository:
+    repo: deb [arch=amd64] https://deb.nodesource.com/node_{{ NODE_10 }}.x focal main
+    state: absent
+
+- name: Apt remove repo in linux
+  apt_repository:
+    repo: deb [arch=amd64] https://deb.nodesource.com/node_{{ NODE_14 }}.x focal main
+    state: absent
+
+- name: Create dir (/usr/local/nvm, /usr/local/nvm/alias, /opt/nvm)
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+    owner: "{{ USER }}"
+    group: "{{ GROUP }}"
+  with_items:
+    - /usr/local/nvm
+    - /usr/local/nvm/alias
+    - /opt/nvm
+
+- name: Install git nvm
+  git:
+    repo: https://github.com/creationix/nvm.git
+    dest: /opt/nvm
+    force: yes
+
+- name: Configuration local  /home/{{ USER }}/.bashrc
+  become: yes
+  become_user: "{{ USER }}"
+  blockinfile:
+    block: |
+      export NVM_DIR="/usr/local/nvm"
+        [ -s "/opt/nvm/nvm.sh" ] && \. "/opt/nvm/nvm.sh"  # This loads nvm
+        [ -s "/opt/nvm/bash_completion" ] && \. "/opt/nvm/bash_completion"  # This loads nvm bash_completion
+    create: yes
+    path: "{{ item }}"
+    mode: 0644
+    state: present
+  with_items:
+    - ~/.bashrc
+    - ~/.zshrc
+
+- name: Profile global (/etc/profile, /etc/skel/.bashrc)
+  become: yes
+  blockinfile:
+    block: |
+      export NVM_DIR="/usr/local/nvm"
+      [ -s "/opt/nvm/nvm.sh" ] && \. "/opt/nvm/nvm.sh"  # This loads nvm
+      [ -s "/opt/nvm/bash_completion" ] && \. "/opt/nvm/bash_completion" # This loads nvm bash_completion
+    create: yes
+    mode: 0644
+    path: "/etc/profile"
+    state: present
+  with_items:
+    - /etc/profile
+    - /etc/skel/.bashrc
+
+- name: Nvm install node and nmp
+  shell: >
+    export NVM_DIR=/usr/local/nvm 
+    source "/opt/nvm/nvm.sh"
+        [ -s "/opt/nvm/nvm.sh" ] && \. "/opt/nvm/nvm.sh"  
+        [ -s "/opt/nvm/bash_completion" ] && \. "/opt/nvm/bash_completion" && {{item}}
+  args:
+    executable: /bin/bash
+  with_items:
+    - 'nvm install --lts {{ NODE_10 }} && npm install -g npm@{{ NPM_10 }}'
+    - 'nvm install --lts {{ NODE_12 }} && npm install -g npm@{{ NPM_12 }}'
+    - 'nvm install --lts {{ NODE_14 }} && npm install -g npm@{{ NPM_14 }} && nvm alias default {{ NODE_14 }}'
+
+- name: Permissions dir (/usr/local/nvm, /usr/local/nvm/alias, /opt/nvm)
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+    owner: "{{ USER }}"
+    group: "{{ GROUP }}"
+    recurse: yes
+  with_items:
+    - /usr/local/nvm
+    - /usr/local/nvm/alias
+    - /opt/nvm
+
+- name: Create a symbolic link /usr/local/bin/node
+  become: yes
+  shell: export LASTEST=$(ls -ldr /usr/local/nvm/versions/node/v{{ NODE_14 }}* | head -1 | awk '{print $9}') && ln -sf $LASTEST/bin/node /usr/local/bin/node
+  args:
+    executable: /bin/bash

@@ -1,0 +1,63 @@
+- name: Create folder
+  become: yes
+  file:
+    path:  "{{ item }}"
+    state: directory
+    mode: 0777
+  with_items:
+    - "{{ GOLANG_SOURCE_FOLDER_PATH }}"
+    - "{{ GOLANG_COMPRESSED_FILE_PATH }}"
+
+- name: Download go binary
+  get_url:
+    url:  "https://storage.googleapis.com/golang/{{ GOLANG_COMPRESSED_FILE_PATH | basename}}"
+    dest: "{{ GOLANG_COMPRESSED_FILE_PATH }}"
+
+- name: Unarchive golang
+  unarchive:
+    src:  "{{ GOLANG_COMPRESSED_FILE_PATH }}"
+    dest: "{{ GOLANG_SOURCE_FOLDER_PATH }}"
+    remote_src: yes
+  connection: local
+
+- name: Copy golang binary
+  command: "cp -r {{ GOLANG_SOURCE_FOLDER_PATH }}/go {{ GOLANG_COMPRESSED_FILE_PATH }}"
+  args:
+    creates: "{{ GOLANG_COMPRESSED_FILE_PATH }}/go"
+
+- name: List bin
+  command: "ls {{ GOLANG_COMPRESSED_FILE_PATH }}/go/bin"
+  changed_when: false
+  register: list_bin
+
+- name: Create links
+  become: yes
+  file:
+    state: link
+    src: "{{ GOLANG_COMPRESSED_FILE_PATH }}/go/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+  with_items: "{{ list_bin.stdout_lines }}"
+
+- name: Create goroot link
+  become: yes
+  file:
+    state: link
+    src: "{{ GOLANG_COMPRESSED_FILE_PATH }}/go"
+    dest: "/usr/local/go"
+
+- name: Install packages
+  command: "go get -u {{ item }}"
+  environment:
+    GOPATH: ""
+    GO111MODULE: "auto"
+  with_items: "{{ GOLANG_LIBRARY_NAMES }}"
+  connection: local
+
+- name: Export go binary to profiles
+  lineinfile:
+    path: "{{ item }}"
+    line: "export PATH=~/go/bin:$PATH"
+  with_items:
+    - ~/.bashrc
+    - ~/.zshrc
+  connection: local

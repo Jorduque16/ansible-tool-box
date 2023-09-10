@@ -1,0 +1,37 @@
+- name: Create cache dir
+  file:
+    path: "{{ CACHE_DIR }}"
+    state: directory
+
+- name: Download aws_cli_v2
+  get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ AWS_VERSION }}.zip
+    dest: "{{ CACHE_DIR }}/awscli-{{AWS_VERSION}}.zip"
+
+- name: Create aws-cli folder
+  file:
+    path: "{{ CACHE_DIR }}/awscli-{{ AWS_VERSION }}"
+    state: directory
+
+- name: Decompress aws_cli_v2
+  unarchive:
+    src: "{{ CACHE_DIR }}/awscli-{{ AWS_VERSION }}.zip"
+    dest: "{{ CACHE_DIR }}/awscli-{{ AWS_VERSION }}"
+
+- name: Remove aws_cli_v2
+  become: yes
+  become_user: root
+  become_method: sudo
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /usr/local/bin/aws
+    - /usr/local/bin/aws_completer
+    - /usr/local/aws-cli
+
+- name: Install aws_cli_v2
+  become: yes
+  become_user: root
+  become_method: sudo
+  shell: cd {{CACHE_DIR}}/awscli-{{ AWS_VERSION }}/aws && ./install

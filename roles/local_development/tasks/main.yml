@@ -1,0 +1,5 @@
+- include_tasks: 00_mysql.yml
+  when: "MYSQL_ENABLED == true"
+
+- include_tasks: 01_nginx.yml
+  when: "NGINX_ENABLED == true"

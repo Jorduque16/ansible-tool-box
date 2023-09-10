@@ -1,0 +1,15 @@
+- name: Remove snapd restriction
+  become: yes
+  file:
+    path: /etc/apt/preferences.d/nosnap.pref
+    state: absent
+
+- name: Installing packages
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt:
+    pkg: "{{ LINUX_PACKAGES }}"
+    state: latest
+    update_cache: true
+
