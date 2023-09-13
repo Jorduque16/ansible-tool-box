@@ -3,7 +3,7 @@
 The purpose of this repository is install and configure the necessary software and tools in a linux machine based on 
 my daily use as a Developer.
 
-## Problem description (Why this repository)
+## Problem description (Why this repository?)
 
 On my current daily job I found some common situation, when i was configuring my linux machine or testing some new 
 program and configuration, I break my operative system many times trying to optimize the resource usages, so i designed 
@@ -81,7 +81,7 @@ These linux packages and software programs are in the road map to complement thi
 * Vivaldi Browser
 * Opera Browser
 
-> If you want to contribute creating the role for some of these packages, feel free to contact me (See Contribute section)[#Contribution]
+> If you want to contribute creating the role for some of these packages, feel free to contact me (See Contribute section)
 
 ___
 
