@@ -1,0 +1,25 @@
+- name: Create .vim folder structure
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - ~/.vim
+    - ~/.vim/autoload
+    - ~/.vim/backup
+    - ~/.vim/colors
+    - ~/.vim/plugged
+
+- name: Install vim pluggin manager
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: ~/.vim/autoload/plug.vim
+
+- name: Download color scheme molokai
+  get_url:
+    url: https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+    dest: ~/.vim/colors/molokai.vim
+
+- name: Set p10k configurations
+  copy:
+    src: templates/vimrc_template.j2
+    dest: ~/.vimrc

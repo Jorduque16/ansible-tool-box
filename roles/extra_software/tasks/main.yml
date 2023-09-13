@@ -1,0 +1,17 @@
+- name: load configuration variables
+  include_vars: ../../../configuration.yml
+
+- include_tasks: 00_anydesk.yml
+  when: "ANYDESK_ENABLED == true"
+
+- include_tasks: 01_dbeaver.yml
+  when: "DBEAVER_ENABLED == true"
+
+- include_tasks: 02_discord.yml
+  when: "DISCORD_ENABLED == true"
+
+- include_tasks: 03_slack.yml
+  when: "SLACK_ENABLED == true"
+
+- include_tasks: 04_spotify.yml
+  when: "SPOTIFY_ENABLED == true"

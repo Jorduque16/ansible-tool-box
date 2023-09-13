@@ -1,0 +1,14 @@
+- name: load configuration variables
+  include_vars: ../../../configuration.yml
+
+- include_tasks: 00_golang.yml #TODO: Solve tar error
+  when: "GOLANG_ENABLED == true"
+
+- include_tasks: 01_nodejs.yml
+  when: "NODEJS_ENABLED == true"
+
+- include_tasks: 02_php.yml
+  when: "PHP_ENABLED == true"
+
+- include_tasks: 03_python.yml
+  when: "PYTHON_ENABLED == true"

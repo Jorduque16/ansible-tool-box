@@ -1,12 +1,10 @@
 # This file contains the steps flags to determine which steps yo want to
-# excecute with the comand make configure-linux, feel free to change this
+# execute with the command make configure-linux, feel free to change this
 # variable values according to your needs
 # 
-# Posible values por each variable: 
+# Possible values por each variable:
 # - false
 # - true
-
-PYTHON_ENABLED: false
 
 AWS_CLI_ENABLED: false
 
@@ -14,35 +12,51 @@ LINUX_UTILITIES_ENABLED: false
 
 ZSH_AND_POWER10K_THEME_ENABLED: false
 
-VIM_THEME_AND_SENTTINGS_ENABLED: false
+VIM_THEME_AND_SETTINGS_ENABLED: false
+
+# PROGRAMMING LANGUAGES
+
+GOLANG_ENABLED: false
+
+NODEJS_ENABLED: false
+
+PHP_ENABLED: false
+
+PYTHON_ENABLED: true
+
+# CODE EDITORS
 
 VISUAL_STUDIO_CODE_ENABLED: false
 
-VISUAL_STUDIO_CODE_TEHEME_AND_EXTENSIONS_ENABLED: false
+VISUAL_STUDIO_CODE_THEME_AND_EXTENSIONS_ENABLED: false
 
-GOLANG_ENABLED: false
+## BROWSERS
 
 GOOGLE_CHROME_ENABLED: false
 
 BRAVE_BROWSER_ENABLED: false
 
-SPOTIFY_ENABLED: false
+## EXTRA SOFTWARE
 
-DB_BEAVER_ENABLED: false
+SPOTIFY_ENABLED: true
 
-SLACK_ENABLED: false
+DBEAVER_ENABLED: true
 
-PHP_ENABLED: false
+SLACK_ENABLED: true
 
-NGINX_ENABLED: false
+DISCORD_ENABLED: true
 
-MYSQL_ENABLED: false
+ANYDESK_ENABLED: true
 
-DISCORD_ENABLED: false
+## LOCAL DEVELOPMENT TOOLS
 
-ANYDESK_ENABLED: false
+NGINX_ENABLED: true
 
-NODEJS_ENABLED: false
+MYSQL_ENABLED: true
+
+
+
+
 
 
 

@@ -1,0 +1,22 @@
+- name: Import spotify gpg
+  become: yes
+  shell: curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+
+- name: Add spotify repository
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt_repository:
+    repo: deb http://repository.spotify.com stable non-free
+    state: present
+
+- name: configure spotify
+  become: yes
+  shell: tee /etc/apt/sources.list.d/spotify.list
+
+- name: Install spotify
+  become: yes
+  apt:
+    name: spotify-client
+    state: present
+    update_cache: yes

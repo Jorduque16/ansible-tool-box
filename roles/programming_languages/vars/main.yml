@@ -1,0 +1,30 @@
+CACHE_DIR: /tmp/.ansible-tool-box
+
+PYTHON_LIBRARY_NAMES:
+  - boto3==1.16.25
+  - boto==2.49.0
+  - requests==2.25.0
+
+GOLANG_VERSION: "1.17.6"
+GOLANG_COMPRESSED_FILE_PATH: "{{ CACHE_DIR }}/go/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
+GOLANG_SOURCE_FOLDER_PATH:  "{{ CACHE_DIR }}/go/go{{ GOLANG_VERSION }}"
+GOLANG_DESTINATION_FOLDER: "/usr/local/golang/{{GOLANG_VERSION}}"
+GOLANG_LIBRARY_NAMES:
+  - honnef.co/go/tools/cmd/staticcheck
+  - github.com/jstemmer/go-junit-report
+  - github.com/google/wire/cmd/wire
+
+
+#TODO: Iterate node versions getting first which are installed on machine
+NODE_10: "10"
+NPM_10: "6.14.10"
+NODE_12: "12"
+NPM_12: "6.14.15"
+NODE_14: "14"
+NPM_14: "7.20.3"
+NVM_VERSION: "v0.38.0"
+USER: "{{ lookup('env','USER') }}"
+GROUP: "{{USER}}"
+
+
+PHP_VERSION: 8.2

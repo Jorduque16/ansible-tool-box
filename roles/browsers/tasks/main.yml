@@ -1,0 +1,8 @@
+- name: load configuration variables
+  include_vars: ../../../configuration.yml
+
+- include_tasks: 00_brave.yml
+  when: "BRAVE_BROWSER_ENABLED == true"
+
+- include_tasks: 01_google_chrome.yml
+  when: "GOOGLE_CHROME_ENABLED == true"

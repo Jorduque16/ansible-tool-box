@@ -1,0 +1,10 @@
+- name: Installing packages
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt:
+    pkg:
+      - mysql-client
+      - mysql-server
+    state: latest
+    update_cache: true

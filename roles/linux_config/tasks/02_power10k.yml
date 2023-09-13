@@ -1,0 +1,58 @@
+- name: Create fonts folder
+  file:
+    path: ~/.local/share/fonts
+    state: directory
+
+- name: Install fonts
+  get_url:
+    url: "{{ item }}"
+    dest: ~/.local/share/fonts
+  loop:
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+
+- name: Reload fonts
+  shell: fc-cache -f -v
+
+- name: Remove prevous configuration file
+  file:
+    path: ~/.oh-my-zsh
+    state: absent
+
+- name: Install Oh my zsh
+  shell: sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+- name: Clone power10k repository
+  git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/powerlevel10k
+
+- name: Append source in zshrc
+  lineinfile:
+    insertbefore: BOF
+    path: ~/.zshrc
+    line: source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+- name: Set p10k configurations
+  copy:
+    src: templates/p10k_configuration.zsh.j2
+    dest: ~/.p10k.zsh
+
+- name: Disable p10k wizzard
+  lineinfile:
+    insertbefore: BOF
+    path: ~/.zshrc
+    line: POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+- name: Load p10k configurations
+  lineinfile:
+    insertbefore: BOF
+    path: ~/.zshrc
+    line: source ~/.p10k.zsh
+
+- name: Set zsh as a default shell
+  lineinfile:
+    path: ~/.bashrc
+    line: /bin/zsh

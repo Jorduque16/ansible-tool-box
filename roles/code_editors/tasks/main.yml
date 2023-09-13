@@ -1,0 +1,5 @@
+- name: load configuration variables
+  include_vars: ../../../configuration.yml
+
+- include_tasks: 00_visual_studio_code.yml
+  when: "VISUAL_STUDIO_CODE_ENABLED == true"

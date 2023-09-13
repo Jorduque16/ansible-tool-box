@@ -1,0 +1,6 @@
+- name: Install discord
+  become: yes
+  snap:
+    name: discord
+    classic: yes
+    channel: stable

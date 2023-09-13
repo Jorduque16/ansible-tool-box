@@ -1,0 +1,16 @@
+- hosts: localhost
+  connection: local
+
+  roles:
+    - role: linux_config
+
+    - role: programming_languages
+
+    - role: browsers
+
+    - role: code_editors
+
+    - role: extra_software
+
+    - role: local_development
+

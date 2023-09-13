@@ -1,0 +1,38 @@
+- name: Update package index
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt:
+    pkg:
+      - software-properties-common
+      - apt-transport-https
+      - wget
+    update_cache: true
+
+- name: Import Microsoft GPG key
+  shell: wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+
+- name: Add vscode repository
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+    state: present
+
+- name: Install vscode
+  become: yes
+  become_user: root
+  become_method: sudo
+  apt:
+    name: code
+    state: present
+
+- name: Install vscode extensions
+  command: "code --install-extension {{ item }} --force"
+  with_items: "{{ VISUAL_STUDIO_CODE_EXTENSIONS }}"
+
+- name: Set vscode settings
+  template:
+    src: templates/vscode_settings.json.j2
+    dest: ~/.config/Code/User/settings.json
