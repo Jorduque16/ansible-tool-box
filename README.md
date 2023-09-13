@@ -3,25 +3,12 @@
 The purpose of this repository is install and configure the necessary software and tools in a linux machine based on 
 my daily use as a Developer.
 
-    - name: install browsers
-      role:
-        name: browsers
+## Problem description (Why this repository)
 
-    - name: install code editors
-      role:
-        name: code_editors
+On my current daily job I found some common situation, when i was configuring my linux machine or testing some new 
+program and configuration, I break my operative system many times trying to optimize the resource usages, so i designed 
+this repository to optimize these repetitive task.
 
-    - name: install extra software
-      role:
-        name: extra_software
-
-    - name: install linux software and plugin for customization
-      role:
-        name: linux_config
-
-    - name: install software for local software development
-      role:
-        name: local_development
 
 ## Menu
 
@@ -32,7 +19,7 @@ my daily use as a Developer.
 
 # Software And Package List
  
-This is the complete list of Packages, Software and pluggins automatized in this repository:
+This is the complete list of Packages, Software and plugins automatized in this repository:
 
 ### Internet Browsers
 
@@ -43,7 +30,7 @@ This is the complete list of Packages, Software and pluggins automatized in this
 
 * [Visual Studio Code](https://code.visualstudio.com)
 
-### Sowtware
+### Software
 
 * [Anydesk](https://anydesk.com/en)
 * [DBeaver](https://dbeaver.io)
@@ -79,6 +66,22 @@ This is the complete list of Packages, Software and pluggins automatized in this
 * [NodeJs](https://nodejs.org/en)
 * [Go](https://go.dev)
 * [Python](https://www.python.org)
+
+___
+
+## Roles to include in a future:
+
+These linux packages and software programs are in the road map to complement this repository:
+
+* Docker
+* Terraform
+* Serverless Framework
+* Pulumi
+* Mozilla Firefox Browser
+* Vivaldi Browser
+* Opera Browser
+
+> If you want to contribute creating the role for some of these packages, feel free to contact me (See Contribute section)[#Contribution]
 
 ___
 
@@ -126,13 +129,18 @@ the packages or extensions:
     make configure-linux
 ```
 
+Pay attention to the console because it will request you the root password for you local machine.
+
 ___
 
 ## Contribution
 
-This project was created with the purpose to improve the local enviroments setup times, if you want to contribute with 
+This project was created with the purpose to improve the local environments setup times, if you want to contribute with 
 some new steps, extensions or packages, feel free to make a __Pull Request__. I will do my best effort to check the 
 steps and merge the incoming contributions as soon as possible.
+
+Also, if you have some suggestion or correction about how I am using ansible to solve this problem, feel free to contact me
+i apreciate every comment and opinion to continue growing and improving my hard skills.
 
 This has been made by a programmer for programmers.
 ___

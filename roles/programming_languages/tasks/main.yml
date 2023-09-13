@@ -1,7 +1,8 @@
 - name: load configuration variables
   include_vars: ../../../configuration.yml
 
-- include_tasks: 00_golang.yml #TODO: Solve tar error
+#TODO: Solve tar error
+- include_tasks: 00_golang.yml
   when: "GOLANG_ENABLED == true"
 
 - include_tasks: 01_nodejs.yml
